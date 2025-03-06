@@ -1,0 +1,41 @@
+{
+  "name": "order-processing-system",
+  "version": "1.0.0",
+  "description": "Order Processing System",
+  "main": "server.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://PoojaBishu1926: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@github.com/PoojaBishu1926/Order-Processing-System.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PoojaBishu1926/Order-Processing-System/issues"
+  },
+  "homepage": "https://github.com/PoojaBishu1926/Order-Processing-System#readme",
+  "dependencies": {
+    "aws-sdk": "^2.1692.0",
+    "axios": "^1.8.1",
+    "bcryptjs": "^3.0.2",
+    "body-parser": "^1.20.3",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.12.1",
+    "redis": "^4.7.0"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
+    "supertest": "^7.0.0"
+  }
+}
