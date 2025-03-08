@@ -1,5 +1,5 @@
 const express = require('express');
-const { createOrder, getOrderById } = require('../controllers/order.controller');
+const { createOrder, getOrderDetails } = require('../controllers/order.controller');
 const authMiddleware = require('../middelware/authMiddleware');
 const router = express.Router();
 
@@ -7,6 +7,6 @@ const router = express.Router();
 router.post('/', authMiddleware, createOrder);
 
 // Get Order Details (Protected Route)
-// router.get('/:id', authMiddleware, getOrderById);
+router.get('/:id', authMiddleware, getOrderDetails);
 
 module.exports = router;

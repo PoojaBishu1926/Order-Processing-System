@@ -46,7 +46,8 @@ const createOrder = async (req, res) => {
 };
 
 
-const getOrderDetails = async (orderId) => {
+const getOrderDetails = async (req, res , next) => {
+    const orderId = req.params?.id
     const redisKey = `order:${orderId}`;
 
     try {
@@ -54,12 +55,12 @@ const getOrderDetails = async (orderId) => {
         
         if (cachedOrder) {
             console.log("order fetched from Redis Cache");
-            return JSON.parse(cachedOrder);
+            return res.status(200).json({data : JSON.parse(cachedOrder), message : "order details fetched"});
         }
 
         const order = await Order.findById(orderId);
         if (!order) {
-            throw new Error("Order not found");
+            return res.status(404).json({data : null, message : "order details not found"});
         }
 
         await redisClient.setex(redisKey, 3600, JSON.stringify(order));
@@ -74,4 +75,4 @@ const getOrderDetails = async (orderId) => {
 
     
 
-module.exports = { createOrder };
+module.exports = { createOrder , getOrderDetails};

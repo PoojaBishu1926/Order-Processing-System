@@ -38,7 +38,7 @@ const processOrder = async () => {
             EX: 3600 // Expire in 1 hour
         });
 
-        console.log("✅Order stored in Redis:", orderDetails.orderId);
+        console.log("Order stored in Redis:", orderDetails.orderId);
 
         // Send confirmation email
         await sendOrderConfirmationEmail(orderDetails);
