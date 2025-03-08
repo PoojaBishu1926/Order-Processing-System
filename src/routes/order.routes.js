@@ -7,6 +7,6 @@ const router = express.Router();
 router.post('/', authMiddleware, createOrder);
 
 // Get Order Details (Protected Route)
-router.get('/:id', authMiddleware, getOrderById);
+// router.get('/:id', authMiddleware, getOrderById);
 
 module.exports = router;
