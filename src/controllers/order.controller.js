@@ -3,6 +3,7 @@ const Inventory = require('../models/inventory.model');
 const { checkStockAvailability, updateStockAfterOrder } = require('../services/inventory.service');
 const { sendToSQS } = require('../services/sqs.service');
 const redisClient = require('../config/redis'); 
+const mongoose = require('mongoose');
 
 const createOrder = async (req, res) => {
     try {
@@ -46,30 +47,33 @@ const createOrder = async (req, res) => {
 };
 
 
-const getOrderDetails = async (req, res , next) => {
-    const orderId = req.params?.id
-    const redisKey = `order:${orderId}`;
-
+const getOrderDetails = async (req, res, next) => {
     try {
+        const orderId = req.params?.id
+        const redisKey = `order:${orderId}`;
+
         const cachedOrder = await redisClient.get(redisKey);
-        
         if (cachedOrder) {
-            console.log("order fetched from Redis Cache");
-            return res.status(200).json({data : JSON.parse(cachedOrder), message : "order details fetched"});
+            console.log("Order fetched from Redis Cache");
+            return res.status(200).json({ data : JSON.parse(cachedOrder), message : "order fetched" });
         }
 
-        const order = await Order.findById(orderId);
+        if (!mongoose.Types.ObjectId.isValid(orderId)) {
+            throw new Error("Invalid order ID format");
+        }
+
+        const order = await Order.findById(new mongoose.Types.ObjectId(orderId));
         if (!order) {
-            return res.status(404).json({data : null, message : "order details not found"});
+            throw new Error("Order not found");
         }
 
-        await redisClient.setex(redisKey, 3600, JSON.stringify(order));
+        await redisClient.set(redisKey, 3600, JSON.stringify(order));
         console.log("Order fetched from DB and stored in Redis");
 
-        return order;
+        return res.status(200).json({ data : order, message : "order fetched" });
     } catch (error) {
-        console.error("Error fetching order:", error);
-        throw error;
+        console.error("Error fetching order:", error.message);
+        next(error);
     }
 };
 
