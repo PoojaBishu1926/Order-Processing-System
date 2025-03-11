@@ -19,12 +19,13 @@ app.use('/api/inventory', inventoryRoutes)
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-app.use((err, req, res, next) => {
-    console.error("Error:", err.message);
+app.use(errorHandler);
+// app.use((err, req, res, next) => {
+//     console.error("Error:", err.message);
 
-    res.status(err.status || 500).json({
-        success: false,
-        message: err.message || "Internal Server Error",
-    });
-});
+//     res.status(err.status || 500).json({
+//         success: false,
+//         message: err.message || "Internal Server Error",
+//     });
+// });
 
