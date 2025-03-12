@@ -13,7 +13,7 @@ const sendOrderConfirmationEmail = async (order) => {
     const params = {
         Source: process.env.SES_VERIFIED_EMAIL,
         Destination: {
-            ToAddresses: ["vikybad9306@gmail.com"]
+            ToAddresses: ["vikybad9306@gmail.com"] //just entered for test and this is verified by ses
         },
         Message: {
             Subject: { Data: `Order Confirmation - ${order.orderId}` },
