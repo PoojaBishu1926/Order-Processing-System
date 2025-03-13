@@ -4,6 +4,7 @@ const connectDB = require('./src/config/db');
 const authRoutes = require('./src/routes/auth.routes');
 const orderRoutes = require('./src/routes/order.routes');
 const inventoryRoutes = require('./src/routes/inventory.routes')
+const errorHandler = require('./src/middelware/errorHandler')
 require('./src/workers/orderProcessor'); // Start SQS worker
 
 
